@@ -25,7 +25,7 @@ public class UpOrDownCounter {
 
     value += increment;
 
-    return !(value == end);
+    return value == end;
   }
 
   public static void main(String[] args) {
