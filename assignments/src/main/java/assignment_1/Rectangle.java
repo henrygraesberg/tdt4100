@@ -14,10 +14,10 @@ public class Rectangle {
     this.y2 = y2;
   }
   public Rectangle(Tuple<Integer> corner1, Tuple<Integer> corner2) {
-    this.x1 = corner1.x();
-    this.y1 = corner1.y();
-    this.x2 = corner2.x();
-    this.y2 = corner2.y();
+    this.x1 = corner1.x;
+    this.y1 = corner1.y;
+    this.x2 = corner2.x;
+    this.y2 = corner2.y;
   }
 
   public int getMinX() {
@@ -62,13 +62,13 @@ public class Rectangle {
   public boolean contains(int x, int y) {
     List<Tuple<Integer>> corners = this.getCorners();
 
-    boolean xInside = corners.get(0).x() <= x && x <= corners.get(2).x();
-    boolean yInside = corners.get(0).y() <= y && y <= corners.get(2).y();
+    boolean xInside = corners.get(0).x <= x && x <= corners.get(2).x;
+    boolean yInside = corners.get(0).y <= y && y <= corners.get(2).y;
 
     return xInside && yInside;
   }
   public boolean contains(Tuple<Integer> point) {
-    return this.contains(point.x(), point.y());
+    return this.contains(point.x, point.y);
   }
   public boolean contains(Rectangle rect) {
     boolean[] contains = {false, false, false, false};
@@ -122,7 +122,7 @@ public class Rectangle {
     return true;
   }
   public boolean add(Tuple<Integer> point) {
-    return this.add(point.x(), point.y());
+    return this.add(point.x, point.y);
   }
   public boolean add(Rectangle rect) {
     if(this.contains(rect)) return false;
