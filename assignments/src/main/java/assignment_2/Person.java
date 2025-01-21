@@ -1,18 +1,23 @@
 package assignment_2;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Person {
-  private String name, email;
+  private String name, email, ssn;
   private Date birthday;
   private char gender;
 
   public Person() {}
-  public Person(String name, String email, Date birthday, char Gender) {
+  public Person(String name, String email, Date birthday, char gender) {
     setName(name);
     setEmail(email);
     setBirthday(birthday);
     setGender(gender);
+  }
+  public Person(String name, String email, Date birthday, char gender, String ssn) {
+    this(name, email, birthday, gender);
+    this.setSSN(ssn);
   }
 
   public String getName() {
@@ -29,6 +34,10 @@ public class Person {
 
   public char getGender() {
     return this.gender;
+  }
+
+  public String getSSN() {
+    return this.ssn;
   }
 
   public void setName(String name) {
@@ -108,5 +117,110 @@ public class Person {
     if(!valid) throw new IllegalArgumentException("Gender must be M, F or null (\\n)");
 
     this.gender = gender;
+  }
+
+  private int weightedSum(int[] numbers, int[] weights) {
+    if(numbers.length != weights.length)
+      throw new IllegalArgumentException("Numbers array and weights array must be the same length");
+    
+    int sum = 0;
+
+    for(int i = 0; i < numbers.length; i++) {
+      sum += numbers[i] * weights[i];
+    }
+
+    System.out.println("\n");
+    System.out.println(sum);
+
+    return sum;
+  }
+  private int weightedSum(String[] numbers, int[] weights) {
+    int[] converted = new int[numbers.length];
+    
+    for(int i = 0; i < numbers.length; i++) {
+      converted[i] = Integer.valueOf(numbers[i]);
+    }
+
+    return weightedSum(converted, weights);
+  }
+
+  private boolean validateSSN(String ssn) {
+    final int[] F = {3, 7, 6, 1, 8, 9, 4, 5, 2};
+    final int[] G = {5, 4, 3, 2, 7, 6, 5, 4, 3, 2};
+
+    int k1WeightedSum = weightedSum(ssn.substring(0, 9).split(""), F);
+    int k2WeightedSum = weightedSum(ssn.substring(0, 10).split(""), G);
+
+    int k1 = 11 - (k1WeightedSum % 11);
+    System.out.println(k1);
+    k1 = k1 == 11 ? 0 : k1;
+
+    int k2 = 11 - (k2WeightedSum % 11);
+    System.out.println(k2);
+    k2 = k2 == 11 ? 0 : k2;
+
+    boolean k1Valid = k1 == Integer.valueOf(ssn.substring(9, 10));
+    boolean k2Valid = k2 == Integer.valueOf(ssn.substring(10, 11));
+
+    return k1Valid && k2Valid;
+  }
+
+  public void setSSN(String ssn) {
+    if(ssn.length() != 11)
+      throw new IllegalArgumentException("SSN must be 11 digits");
+
+    if(this.getBirthday() == null)
+      throw new UnsupportedOperationException("Cannot set SSN of a person without a birthday");
+
+    Calendar birthday = Calendar.getInstance();
+    birthday.setTime(this.getBirthday());
+
+    String birthdayDate = String.valueOf(birthday.get(Calendar.DAY_OF_MONTH));
+    birthdayDate = birthdayDate.length() == 2 ? birthdayDate : "0" + birthdayDate;
+    System.out.println(birthdayDate);
+
+    String birthdayMonth = String.valueOf(birthday.get(Calendar.MONTH) + 1); //Calendar.MONTH bruker nullindeksering hvor januar er måned 0, derav + 1
+    birthdayMonth = birthdayMonth.length() == 2 ? birthdayMonth : "0" + birthdayMonth;
+    System.out.println(birthdayMonth);
+
+    String[] birtdayYearSplit = String.valueOf(birthday.get(Calendar.YEAR)).split("");
+    String birthdayYear = birtdayYearSplit[birtdayYearSplit.length - 2] + birtdayYearSplit[birtdayYearSplit.length - 1]; //Siden moderne norske pesronnummere først ble tatt i bruk i 1964, kan vi anta at ingen født før år 10 har et personnummber, og bruke de to siste sifferene i årstallet uten å treffe på ett unntak
+    System.out.println(birthdayYear);
+
+    String birthdayString = birthdayDate + birthdayMonth + birthdayYear;
+    String ssnBirthday = ssn.substring(0, 6);
+
+    if(!birthdayString.equals(ssnBirthday))
+      throw new IllegalArgumentException(String.format("SSN birthday does not match %s's birthday", this.getName()));
+
+    Integer ssnGenderControl = Integer.valueOf(ssn.substring(8, 9));
+    switch(this.getGender()) {
+      case '\0':
+        throw new UnsupportedOperationException("Cannot set the SSN of a person without a gender");
+      case 'F':
+        if(ssnGenderControl % 2 != 0)
+          throw new IllegalArgumentException("The 9th digit of an SSN must be an even number for a female");
+        break;
+      case 'M':
+        if(ssnGenderControl % 2 == 0)
+          throw new IllegalArgumentException("the 9th digit of an SSN must be an odd number for a male");
+    }
+
+    if(!validateSSN(ssn))
+      throw new IllegalArgumentException("SSN is not a valid SSN");
+
+    this.ssn = ssn;
+  }
+
+  public static void main(String[] args) {
+    Person p = new Person("Argentina Man", "argentina.man@nazi.de", new Date(105, 8, 11), 'M');
+    System.out.println(p.getGender());
+    Calendar c = Calendar.getInstance();
+    c.setTime(new Date(105, 9, 11));
+    System.out.println(c.get(Calendar.YEAR));
+    System.out.println(Integer.valueOf("11090598548".substring(8, 9)));
+
+    p.setSSN("11090598548");
+    System.out.println(p.getSSN());
   }
 }
