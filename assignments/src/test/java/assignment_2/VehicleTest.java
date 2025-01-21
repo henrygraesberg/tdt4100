@@ -39,7 +39,7 @@ public class VehicleTest {
 	}
 
 	//TODO: Re-enable test
-	//@Test
+	@Test
 	void testConstructor() {
 		vehicle = new Vehicle('C', 'D', "BN12345");
 		checkVehicleState('C', 'D', "BN12345", vehicle);
@@ -87,7 +87,7 @@ public class VehicleTest {
 	}
 
 	//TODO: Re-enable test
-	//@Test
+	@Test
 	void testSetRegistrationNumber() {
 		vehicle = new Vehicle('C', 'D', "BN12345");
 		vehicle.setRegistrationNumber("AB54321");
