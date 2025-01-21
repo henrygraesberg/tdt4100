@@ -109,17 +109,4 @@ public class Person {
 
     this.gender = gender;
   }
-
-  public static void main(String[] args) {
-    Person p = new Person();
-
-    String email = "ola.nordmann@ntnu.no";
-    String[] emailSplit = email.split("@");
-    String[] nameSplit = emailSplit[0].split("\\.");
-    
-    System.out.println(emailSplit[0]);
-    System.out.println(nameSplit[0]);
-
-    p.setName("Ola Nordmann");
-  }
 }
