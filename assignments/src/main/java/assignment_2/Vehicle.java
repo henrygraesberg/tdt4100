@@ -52,7 +52,7 @@ public class Vehicle {
   }
 
   public void setRegistrationNumber(String newRegNumber) {
-    String letters = newRegNumber.replaceFirst("[a-z1-9]+", "");
+    String letters = newRegNumber.replaceFirst("[a-z0-9]+", "");
 
     if(letters.length() != 2) throw new IllegalArgumentException("Registration number must contain two letters at the start");
 
