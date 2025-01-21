@@ -98,7 +98,16 @@ public class Person {
   }
 
   public void setGender(char gender) {
-    
+    char[] validGender = {'M', 'F', '\0'};
+    boolean valid = false;
+
+    for (char c : validGender) {
+      if(c == gender) valid = true;
+    }
+
+    if(!valid) throw new IllegalArgumentException("Gender must be M, F or null (\\n)");
+
+    this.gender = gender;
   }
 
   public static void main(String[] args) {
