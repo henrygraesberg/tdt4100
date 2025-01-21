@@ -27,16 +27,4 @@ public class UpOrDownCounter {
 
     return !(value == end);
   }
-
-  public static void main(String[] args) {
-    UpOrDownCounter counter = new UpOrDownCounter(0, 5);
-
-    for(int i = 0; i < 5; i++) {
-      System.out.println(counter.count());
-      System.out.println(counter.getCounter());
-    }
-
-    System.out.println(counter.count());
-    System.out.println(counter.getCounter());
-  }
 }

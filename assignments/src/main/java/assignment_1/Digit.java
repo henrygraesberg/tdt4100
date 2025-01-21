@@ -38,16 +38,4 @@ public class Digit {
 
     return alphabet[rest];
   }
-
-  public static void main(String[] args) {
-    Digit dig = new Digit(2);
-    Digit dig2 = new Digit(16, 11);
-    
-    System.out.println(dig.increment());
-    System.out.println(dig.increment());
-
-    System.out.println(dig);
-
-    System.out.println(dig2);
-  }
 }

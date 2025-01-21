@@ -211,16 +211,4 @@ public class Person {
 
     this.ssn = ssn;
   }
-
-  public static void main(String[] args) {
-    Person p = new Person("Argentina Man", "argentina.man@nazi.de", new Date(105, 8, 11), 'M');
-    System.out.println(p.getGender());
-    Calendar c = Calendar.getInstance();
-    c.setTime(new Date(105, 9, 11));
-    System.out.println(c.get(Calendar.YEAR));
-    System.out.println(Integer.valueOf("11090598548".substring(8, 9)));
-
-    p.setSSN("11090598548");
-    System.out.println(p.getSSN());
-  }
 }

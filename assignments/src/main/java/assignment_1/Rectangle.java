@@ -162,21 +162,4 @@ public class Rectangle {
       corners.get(3)
     );
   }
-
-  public static void main(String[] args) {
-    Rectangle rect1 = new Rectangle(0, 0, 100, 100);
-    Rectangle rect2 = new Rectangle(50, 50, 101, 101);
-    Rectangle rect3 = new Rectangle(200, 22, 12, 39);
-
-    System.out.println(rect1);
-    System.out.println(rect2);
-    System.out.println(rect3);
-
-    Rectangle union1_2 = rect1.union(rect3);
-    System.out.println(union1_2);
-    Rectangle union2_1 = rect3.union(rect1);
-    System.out.println(union2_1);
-
-    System.out.println(rect1.contains(rect2));
-  }
 }
