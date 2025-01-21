@@ -7,6 +7,7 @@ public class Person {
   private Date birthday;
   private char gender;
 
+  public Person() {}
   public Person(String name, String email, Date birthday, char Gender) {
     setName(name);
     setEmail(email);
@@ -34,6 +35,9 @@ public class Person {
     String[] nameSplit = name.split(" ");
     
     if(nameSplit.length != 2) throw new IllegalArgumentException("Name must consist of first and last name");
+    for (String nameString : nameSplit) {
+      if(nameString.length() < 2) throw new IllegalArgumentException("First and last name must be at least 2 characters long each");
+    }
 
     this.name = name;
   }
