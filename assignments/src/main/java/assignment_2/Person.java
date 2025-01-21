@@ -37,6 +37,8 @@ public class Person {
     if(nameSplit.length != 2) throw new IllegalArgumentException("Name must consist of first and last name");
     for (String nameString : nameSplit) {
       if(nameString.length() < 2) throw new IllegalArgumentException("First and last name must be at least 2 characters long each");
+      
+      if(!nameString.matches("[a-zA-Z]+")) throw new IllegalArgumentException("Names must consist only of letters");
     }
 
     this.name = name;
