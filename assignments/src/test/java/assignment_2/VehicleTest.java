@@ -127,7 +127,7 @@ public class VehicleTest {
 		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "AB1234");
 		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "AB123456");
 		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "ABC1234");
-		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "AÆ12345");
+		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "ØÅ12345");
 		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "ab12345");
 		checkInvalidsetRegistration(vehicle, vehicle.getRegistrationNumber(), "A1B2345");
 

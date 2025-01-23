@@ -90,7 +90,7 @@ public class Vehicle {
         if(numbers.length() != 5)
           throw new IllegalArgumentException("Cars must have 5 numbers in their registration number");
         break;
-      case 'M':
+      default:
         if(numbers.length() != 4)
           throw new IllegalArgumentException("Motorcycles must have 4 numbers in their registration number");
         break;
