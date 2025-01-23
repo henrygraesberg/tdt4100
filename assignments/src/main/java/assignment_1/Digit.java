@@ -7,12 +7,6 @@ public class Digit {
     this.base = base;
     this.value = 0;
   }
-  public Digit(int base, int value) {
-    if(value > base || value < 0) throw new IllegalArgumentException("Value must be between 0 and the base system");
-
-    this.value = value;
-    this.base = base;
-  }
 
   public int getValue() {
     return this.value;
