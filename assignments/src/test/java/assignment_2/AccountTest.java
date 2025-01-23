@@ -27,12 +27,8 @@ public class AccountTest {
 		assertEquals(100.0d, account.getBalance(), epsilon);
 		assertEquals(5.0d, account.getInterestRate(), epsilon);
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			new Account(-1, 5);
-		});
-		assertThrows(IllegalArgumentException.class, () -> {
-			new Account(100, -1);
-		});
+		assertThrows(IllegalArgumentException.class, () -> new Account(-1, 5));
+		assertThrows(IllegalArgumentException.class, () -> new Account(100, -1));
 	}
 
 	@Test
@@ -40,9 +36,7 @@ public class AccountTest {
 		account.setInterestRate(7);
 		assertEquals(7, account.getInterestRate(), epsilon);
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			account.setInterestRate(-2);
-		});
+		assertThrows(IllegalArgumentException.class, () -> account.setInterestRate(-2));
 	}
 
 	@Test
@@ -50,9 +44,7 @@ public class AccountTest {
 		account.deposit(100);
 		assertEquals(200.0d, account.getBalance(), epsilon);
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			account.deposit(-50);
-		});
+		assertThrows(IllegalArgumentException.class, () -> account.deposit(-50));
 	}
 
 	@Test
@@ -60,8 +52,18 @@ public class AccountTest {
 		account.withdraw(50);
 		assertEquals(50.0d, account.getBalance(), epsilon);
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			account.withdraw(150);
-		});
+		assertThrows(IllegalArgumentException.class, () -> account.withdraw(150));
+
+		assertThrows(IllegalArgumentException.class, () -> account.withdraw(-10));
+	}
+
+	@Test
+	public void testEmptyAccount() {
+		account = new Account();
+
+		assertEquals(0.0d, account.getBalance(), epsilon);
+
+		account.addInterest();
+		assertEquals(0.0d, account.getBalance(), epsilon);
 	}
 }
