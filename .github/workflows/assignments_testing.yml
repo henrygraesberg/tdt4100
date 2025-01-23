@@ -37,3 +37,4 @@ jobs:
         name: code-coverage-report
         path: assignments/target/site/jacoco/jacoco.csv
         if-no-files-found: warn
+        compression-level: 0
