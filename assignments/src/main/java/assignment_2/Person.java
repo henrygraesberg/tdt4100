@@ -66,10 +66,8 @@ public class Person {
 
     if(!hasAt) throw argumentError;
 
-    System.out.println(emailSplit);
 
     String[] emailNameSplit = emailSplit[0].split("\\.");
-    System.out.println(emailNameSplit);
     String[] personNameSplit = this.name.split(" ");
     boolean isTwoNames = emailNameSplit.length == 2;
 
@@ -129,9 +127,6 @@ public class Person {
       sum += numbers[i] * weights[i];
     }
 
-    System.out.println("\n");
-    System.out.println(sum);
-
     return sum;
   }
   private int weightedSum(String[] numbers, int[] weights) {
@@ -152,11 +147,9 @@ public class Person {
     int k2WeightedSum = weightedSum(ssn.substring(0, 10).split(""), G);
 
     int k1 = 11 - (k1WeightedSum % 11);
-    System.out.println(k1);
     k1 = k1 == 11 ? 0 : k1;
 
     int k2 = 11 - (k2WeightedSum % 11);
-    System.out.println(k2);
     k2 = k2 == 11 ? 0 : k2;
 
     boolean k1Valid = k1 == Integer.valueOf(ssn.substring(9, 10));
@@ -177,15 +170,12 @@ public class Person {
 
     String birthdayDate = String.valueOf(birthday.get(Calendar.DAY_OF_MONTH));
     birthdayDate = birthdayDate.length() == 2 ? birthdayDate : "0" + birthdayDate;
-    System.out.println(birthdayDate);
 
     String birthdayMonth = String.valueOf(birthday.get(Calendar.MONTH) + 1); //Calendar.MONTH bruker nullindeksering hvor januar er måned 0, derav + 1
     birthdayMonth = birthdayMonth.length() == 2 ? birthdayMonth : "0" + birthdayMonth;
-    System.out.println(birthdayMonth);
 
     String[] birtdayYearSplit = String.valueOf(birthday.get(Calendar.YEAR)).split("");
     String birthdayYear = birtdayYearSplit[birtdayYearSplit.length - 2] + birtdayYearSplit[birtdayYearSplit.length - 1]; //Siden moderne norske pesronnummere først ble tatt i bruk i 1964, kan vi anta at ingen født før år 10 har et personnummber, og bruke de to siste sifferene i årstallet uten å treffe på ett unntak
-    System.out.println(birthdayYear);
 
     String birthdayString = birthdayDate + birthdayMonth + birthdayYear;
     String ssnBirthday = ssn.substring(0, 6);
