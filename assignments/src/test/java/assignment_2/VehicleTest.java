@@ -38,7 +38,6 @@ public class VehicleTest {
 		TestHelper.checkIfFieldsPrivate(Vehicle.class);
 	}
 
-	//TODO: Re-enable test
 	@Test
 	void testConstructor() {
 		vehicle = new Vehicle('C', 'D', "BN12345");
@@ -86,7 +85,6 @@ public class VehicleTest {
 		checkInvalidConstructor('M', 'E', "BN1234");
 	}
 
-	//TODO: Re-enable test
 	@Test
 	void testSetRegistrationNumber() {
 		vehicle = new Vehicle('C', 'D', "BN12345");
