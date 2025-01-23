@@ -31,4 +31,5 @@ jobs:
       run: |
         cd assignments
         mvn clean test
-        cat target/site/jacoco/jacoco.csv
+    - name: Test coverage report
+      run: cat assignments/target/site/jacoco/jacoco.csv
