@@ -54,7 +54,12 @@ public class Vehicle {
   public void setRegistrationNumber(String newRegNumber) {
     String letters = newRegNumber.replaceFirst("[a-z0-9]+", "");
 
-    if(letters.length() != 2) throw new IllegalArgumentException("Registration number must contain two letters at the start");
+    if(letters.length() != 2) {
+      if(letters.matches("[A-Z]+"))
+        throw new IllegalArgumentException("Registration number must contain two letters at the start");
+      else
+        throw new IllegalArgumentException("A registration number must not contain special characters");
+    }
 
     switch(this.getFuelType()) {
       case 'E':
@@ -83,7 +88,7 @@ public class Vehicle {
     if(letters.contains("Æ") || letters.contains("Ø") || letters.contains("Å"))
       throw new IllegalArgumentException("Æ, Ø, or Å cannot be in the registration number");
     
-    String numbers = newRegNumber.replaceFirst("[A-Za-z]+", "");
+    String numbers = newRegNumber.replaceFirst("[A-Z]+", "");
 
     switch(this.getVehicleType()) {
       case 'C':
