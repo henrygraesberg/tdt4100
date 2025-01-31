@@ -1,0 +1,33 @@
+@startuml Digit
+
+state "1: Digit" as Base10Digit
+Base10Digit : base = 10
+Base10Digit : value = 0
+
+state "1: Digit" as Base10DigitIncremented
+Base10DigitIncremented : base = 10
+Base10DigitIncremented : value = 1
+
+Base10Digit -[dashed]-> Base10DigitIncremented : increment() => false
+Base10DigitIncremented -[dashed]-> Base10DigitIncremented : getValue() => 1
+
+state "2: Digit" as Base12Digit
+Base12Digit : base = 12
+Base12Digit : value = 0
+
+state "2: Digit" as Base12DigitIncremented
+Base12DigitIncremented : base = 12
+Base12DigitIncremented : value = 11
+
+state "2: Digit" as Base12DigitReset
+Base12DigitReset : base = 12
+Base12DigitReset : value = 0
+
+Base12Digit -[dashed]-> Base12Digit : getBase() => 12
+Base12Digit -[dashed]-> Base12DigitIncremented : [increment() => false] * 11
+Base12DigitIncremented -[dashed]-> Base12DigitReset : increment() => true
+
+Base12DigitIncremented -[dashed]-> Base12DigitIncremented : toString() => "C"
+Base12DigitReset -[dashed]-> Base12DigitReset : toString() => "0"
+
+@enduml
