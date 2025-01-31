@@ -32,6 +32,17 @@ public class CardDeckTest {
 	}
 
 	@Test
+	@DisplayName("Getters")
+	public void testGetters() {
+		CardDeck cardDeck = new CardDeck(2);
+
+		assertEquals("S1", cardDeck.getCard(0).toString());
+		assertThrows(IllegalArgumentException.class, () -> cardDeck.getCard(100));
+
+		assertEquals(2*4, cardDeck.getCardCount());
+	}
+
+	@Test
 	@DisplayName("#shufflePerfectly()")
 	public void testShufflePerfectly() {
 		CardDeck cardDeck = new CardDeck(2);
