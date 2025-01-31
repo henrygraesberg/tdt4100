@@ -25,9 +25,11 @@ Base12DigitReset : value = 0
 
 Base12Digit -[dashed]-> Base12Digit : getBase() => 12
 Base12Digit -[dashed]-> Base12DigitIncremented : [increment() => false] * 11
+
+Base12DigitIncremented -[dashed]-> Base12DigitIncremented : getValue() => 11
+Base12DigitIncremented -[dashed]-> Base12DigitIncremented : toString() => "B"
 Base12DigitIncremented -[dashed]-> Base12DigitReset : increment() => true
 
-Base12DigitIncremented -[dashed]-> Base12DigitIncremented : toString() => "C"
 Base12DigitReset -[dashed]-> Base12DigitReset : toString() => "0"
 
 @enduml
