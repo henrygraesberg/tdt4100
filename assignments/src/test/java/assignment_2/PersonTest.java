@@ -27,6 +27,24 @@ public class PersonTest {
 	}
 
 	@Test
+	@DisplayName("Test constructor")
+	public void testConstructor() {
+		String name = "Ola Nordmann";
+		String email = "ola.nordmann@ntnu.no";
+		Date birthday = new Date(946684800);
+		char gender = 'M';
+
+		assertDoesNotThrow(
+		() -> person = new Person(name, email, birthday, gender)
+		);
+
+		assertEquals(name, person.getName());
+		assertEquals(email, person.getEmail());
+		assertEquals(birthday, person.getBirthday());
+		assertEquals(gender, person.getGender());		
+	}
+
+	@Test
 	@DisplayName("Private fields")
 	public void testPrivateFields() {
 		TestHelper.checkIfFieldsPrivate(Person.class);

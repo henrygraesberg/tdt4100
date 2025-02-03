@@ -64,6 +64,8 @@ public class DigitTest {
 			boolean result = digit.increment();
 			assertEquals("0", digit.toString(), "wrong string representation");
 			assertTrue(result, "increment should return true when the value is reset to 0");
+
+			Digit.main(new String[0]);
 		}
 	}
 }
