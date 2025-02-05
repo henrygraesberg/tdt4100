@@ -89,16 +89,4 @@ public class RPNCalc {
         throw new IllegalArgumentException("Illegal operation");
     }
   }
-
-  public static void main(String[] args) {
-    RPNCalc c = new RPNCalc();
-
-    c.push(2.5);
-    c.push(0);
-
-    c.performOperation('/');
-    System.out.println(c.peek(0));
-
-    System.out.println(25 / 0);
-  }
 }
