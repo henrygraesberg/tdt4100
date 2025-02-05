@@ -123,15 +123,19 @@ public class RPNCalcTest {
 		calc.performOperation('/');
 		assertEquals(1, calc.getSize());
 		assertEquals(2.5, calc.peek(0));
+
+		calc.push(0);
+		calc.performOperation('/');
+		assertEquals(true, Double.isInfinite(calc.peek(0)));
 	}
 
 	@Test
 	@DisplayName("Test error")
 	public void testOtherOperations() {
-		assertThrows(IllegalArgumentException.class, () -> calc.performOperation('a'));
-
 		calc.push(10.0);
 		calc.push(4.0);
+
+		assertThrows(IllegalArgumentException.class, () -> calc.performOperation('a'));
 		
 		calc.performOperation('~');
 		assertEquals(10.0, calc.peek(0));
@@ -140,6 +144,8 @@ public class RPNCalcTest {
 		calc.push(-2.0);
 		calc.performOperation('|');
 		assertEquals(2, calc.peek(0));
+
+		calc = new RPNCalc();
 
 		calc.performOperation('p');
 		calc.performOperation('π');

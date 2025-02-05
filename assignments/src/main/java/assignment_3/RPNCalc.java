@@ -33,16 +33,18 @@ public class RPNCalc {
     return this.numbers.pop();
   }
 
-  public void performOperation(char operation) { 
+  public void performOperation(char operation) {
     ArrayList<Double> topValues = new ArrayList<Double>();
+
+    if(this.getSize() == 0 && !(operation == 'p' || operation == 'π')) return;
+
+    if(this.getSize() == 1 && (operation == '*' || operation == '/' || operation == '~')) return;
     
     if(operation == '+' ||
       operation == '-' ||
       operation == '*' ||
       operation == '/' ||
       operation == '~') {
-        if(operation == '~' && this.getSize() == 1) return;
-
         topValues.add(this.pop());
         topValues.add(this.pop());
       }
@@ -68,11 +70,7 @@ public class RPNCalc {
         this.push(topValues.get(1) * topValues.get(0));
         break;
       case '/':
-        try {
-          this.push(topValues.get(1) / topValues.get(0));
-        } catch (Exception e) {
-          this.push(Double.NaN);
-        }
+        this.push(topValues.get(1) / topValues.get(0));
         break;
       case '~':
         this.push(topValues.get(0));
@@ -90,5 +88,17 @@ public class RPNCalc {
       default:
         throw new IllegalArgumentException("Illegal operation");
     }
+  }
+
+  public static void main(String[] args) {
+    RPNCalc c = new RPNCalc();
+
+    c.push(2.5);
+    c.push(0);
+
+    c.performOperation('/');
+    System.out.println(c.peek(0));
+
+    System.out.println(25 / 0);
   }
 }
