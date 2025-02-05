@@ -71,7 +71,7 @@ public class Person {
     String[] personNameSplit = this.name.split(" ");
     boolean isTwoNames = emailNameSplit.length == 2;
 
-    if(!isTwoNames) throw new IllegalArgumentException();
+    if(!isTwoNames) throw argumentError;
 
     boolean firstNameMatches = emailNameSplit[0].equals(personNameSplit[0].toLowerCase());
     boolean lastNameMatches = emailNameSplit[1].equals(personNameSplit[1].toLowerCase());
@@ -96,6 +96,11 @@ public class Person {
   }
 
   public void setBirthday(Date birthday) {
+    if(birthday == null) {
+      this.birthday = birthday;
+      return;
+    }
+
     Date today = new Date();
 
     if(birthday.after(today))
@@ -194,11 +199,20 @@ public class Person {
       case 'M':
         if(ssnGenderControl % 2 == 0)
           throw new IllegalArgumentException("the 9th digit of an SSN must be an odd number for a male");
+        break;
     }
 
     if(!validateSSN(ssn))
       throw new IllegalArgumentException("SSN is not a valid SSN");
 
     this.ssn = ssn;
+  }
+
+  public static void main(String[] args) {
+    Person newPerson = new Person("Ola Nordmann", "ola.nordmann@ntnu.no", null, 'M');
+
+    System.out.println(newPerson.getBirthday());
+
+    newPerson.setSSN("01019411156");
   }
 }
