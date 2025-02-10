@@ -1,4 +1,4 @@
-# TDT4100 - Objekt-Oriented Programming
+# TDT4100 - Object-Oriented Programming
 
 [Course page](https://www.ntnu.edu/studies/courses/TDT4100#tab=omEmnet)
 
