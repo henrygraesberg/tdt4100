@@ -15,39 +15,39 @@ public class TwitterAccount {
     return this.userName;
   }
 
-  void follow(TwitterAccount account) {
+  public void follow(TwitterAccount account) {
     this.following.add(account);
   }
 
-  void unfollow(TwitterAccount account) {
+  public void unfollow(TwitterAccount account) {
     this.following.remove(account);
   }
 
-  boolean isFollowing(TwitterAccount account) {
+  public boolean isFollowing(TwitterAccount account) {
     return this.following.contains(account);
   }
 
-  boolean isFollowedBy(TwitterAccount account) {
+  public boolean isFollowedBy(TwitterAccount account) {
     return account.isFollowing(this);
   }
 
-  void tweet(String tweetContent) {
+  public void tweet(String tweetContent) {
     this.tweets.add(new Tweet(this, tweetContent));
   }
 
-  void retweet(Tweet tweet) {
+  public void retweet(Tweet tweet) {
     this.tweets.add(new Tweet(this, tweet));
   }
 
-  Tweet getTweet(int i) {
+  public Tweet getTweet(int i) {
     return this.tweets.get(this.tweets.size() - i);
   }
 
-  int getTweetCount() {
+  public int getTweetCount() {
     return this.tweets.size();
   }
 
-  int getRetweetCount() {
+  public int getRetweetCount() {
     int retweetCount = 0;
 
     for (Tweet tweet : tweets) {
