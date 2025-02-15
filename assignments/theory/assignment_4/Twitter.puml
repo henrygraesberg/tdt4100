@@ -1,0 +1,38 @@
+@startuml Twitter
+
+class TwitterAccount {
+  -String userName
+
+  +String getUserName()
+  +boolean isFollowing(TwitterAccount)
+  +boolean isFollowedBy(TwitterAccount)
+}
+
+class "Other TwitterAccount" as TwitterAccount2 {
+  -String userName
+
+  +String getUserName()
+  +boolean isFollowing(TwitterAccount)
+  +boolean isFollowing(TwitterAccount)
+}
+
+class "Tweet (Original)" as Tweet {
+  -String tweetContent
+  -int retweetCount
+
+  +String getText()
+  +int getRetweetCount()
+}
+
+class "Tweet (Retweet)" as Retweet {
+  -Tweet originalTweet
+  
+  +String getText()
+}
+
+TwitterAccount "following: *" -- "following: *" TwitterAccount2
+TwitterAccount "ownerAccount: 1" -- "tweets: *" Tweet
+TwitterAccount "ownerAccount: 1" -- "tweets: *" Retweet
+Tweet <-- Retweet : "originalTweet"
+
+@enduml
