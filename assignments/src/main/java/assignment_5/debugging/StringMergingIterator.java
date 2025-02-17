@@ -28,15 +28,19 @@ public class StringMergingIterator implements Iterator<String> {
 		String result = null;
 
 		if (!this.first.hasNext()) {
-			result = this.first.next();
-		} else if (!this.second.hasNext()) {
+			//OLD CODE: result = this.first.next();
 			result = this.second.next();
+			//change to this.second.next(), so that it doesn't try to get next element of an iterator we already know has no next
+		} else if (!this.second.hasNext()) {
+			//OLD CODE: result = this.second.next();
+			result = this.first.next();
+			//same as with line 32
 		} else {
 			if (this.turnSwitch) {
 				result = this.first.next();
 				this.turnSwitch = false;
-			}
-			if (!this.turnSwitch) {
+			} else if (!this.turnSwitch) {
+				//change this from an if to an else if, since the previous line would set turnswitch to false, making the condition true and running the code in both ifs
 				result = this.second.next();
 				this.turnSwitch = true;
 			}
