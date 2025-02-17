@@ -7,16 +7,22 @@ mainThread -> logic : next()
 
 alt first.hasNext()=false
   logic --> mainThread : second.next()
+
 else second.hasNext()=false
   logic --> mainThread : first.next()
-else first.hasNext()=true && second.hasNext=true
+
+else first.hasNext()=true && second.hasNext()=true
   memory --> logic : turnSwitch
+
   alt turnSwitch=true
     logic --> mainThread : first.next()
     logic -> memory : set turnSwitch to false
+
   else turnSwitch=false
     logic --> mainThread : second.next()
     logic -> memory : set turnSwitch to true
+
   end
+
 end
 @enduml
