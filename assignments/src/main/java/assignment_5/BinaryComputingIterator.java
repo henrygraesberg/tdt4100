@@ -2,7 +2,6 @@ package assignment_5;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.function.BinaryOperator;
 
 public class BinaryComputingIterator {
@@ -34,9 +33,13 @@ public class BinaryComputingIterator {
         newList.add(operator.apply(nextElement1, nextElement2));
       } catch (Exception e) {
         if(nextElement1 == null) {
+          if(default1 == null)
+            break;
           newList.add(operator.apply(default1, nextElement2));
         }
         if(nextElement2 == null) {
+          if(default2 == null)
+            break;
           newList.add(operator.apply(nextElement1, default2));
         }
       }
@@ -45,12 +48,11 @@ public class BinaryComputingIterator {
     return newList.iterator();
   }
 
-  public static void main(String[] args) {
-    Iterator<Double> iterator1 = List.of(2.0, 3.0).iterator();
-    Iterator<Double> iterator2 = List.of(5.0).iterator();
+  public double next() {
+    return iterator.next();
+  }
 
-    BinaryOperator<Double> addition = (a, b) -> a + b;
-
-    new BinaryComputingIterator(iterator1, iterator2, addition);
+  public boolean hasNext() {
+    return iterator.hasNext();
   }
 }
