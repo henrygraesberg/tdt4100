@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.BinaryOperator;
 
-public class BinaryComputingIterator {
+public class BinaryComputingIterator implements Iterator<Double> {
   private Iterator<Double> iterator;
 
   public BinaryComputingIterator(Iterator<Double> iterator1, Iterator<Double> iterator2, BinaryOperator<Double> operator) {    
@@ -48,10 +48,12 @@ public class BinaryComputingIterator {
     return newList.iterator();
   }
 
-  public double next() {
+  @Override
+  public Double next() {
     return iterator.next();
   }
 
+  @Override
   public boolean hasNext() {
     return iterator.hasNext();
   }
