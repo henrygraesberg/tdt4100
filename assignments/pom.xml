@@ -53,6 +53,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/debugging/*.*</exclude>
+						<exclude>**/HighscoreListProgram.*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
