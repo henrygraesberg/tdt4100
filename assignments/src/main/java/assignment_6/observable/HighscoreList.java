@@ -2,7 +2,6 @@ package assignment_6.observable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class HighscoreList {
   private int maxSize;
@@ -26,22 +25,27 @@ public class HighscoreList {
   public void addResult(int result) {
     int oldSize = this.results.size();
 
-    Consumer<HighscoreListListener> notifyListener = listener -> listener.listChanged(this, result);
-
     if(oldSize == 0) {
       this.results.add(result);
-      highscoreListListeners.forEach(notifyListener);
+      highscoreListListeners.forEach(listener -> listener.listChanged(this, 0));
       return;
     }
 
     for (int i = 0; i < oldSize; i++) {
-      if(this.results.get(i) > result) this.results.add(i, result);
-      highscoreListListeners.forEach(notifyListener);
+      if(this.results.get(i) > result) {
+        this.results.add(i, result);
+        final int index = i;
+        highscoreListListeners.forEach(listener -> listener.listChanged(this, index));
+
+        break;
+      }
     }
 
-    if(this.results.size() == oldSize) {
+    if(this.results.size() == oldSize && !(this.results.size() >= maxSize)) {
       this.results.add(result);
-      highscoreListListeners.forEach(notifyListener);
+      highscoreListListeners.forEach(listener -> listener.listChanged(this, this.results.size() - 1));
+    } else if(this.results.size() == oldSize) {
+      highscoreListListeners.forEach(listener -> listener.listChanged(this, -1));
     }
 
     if(this.results.size() > maxSize) {
