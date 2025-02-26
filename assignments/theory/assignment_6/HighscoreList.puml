@@ -1,0 +1,74 @@
+@startuml HighscoreList
+
+state HighscoreListListener
+HighscoreListListener : list = HighscoreList
+
+state "HighscoreList" as H1
+H1 : maxSize = 5
+H1 : results = []
+
+H1 --> H2 : addResult(scanner.nextInt = 10)
+
+state "HighscoreList" as H2
+H2 : maxSize = 5
+H2 : results = [10]
+
+H2 --> H3 : addResult(scanner.nextInt = 8)
+H2 -> HighscoreListListener : listChanged(this, 0)
+
+state "HighscoreList" as H3
+H3 : maxSize = 5
+H3 : results = [8, 10]
+
+H3 --> H4 : addResult(scanner.nextInt = 13)
+H3 -> HighscoreListListener : listChanged(this, 0)
+
+state "HighscoreList" as H4
+H4 : maxSize = 5
+H4 : results = [8, 10, 13]
+
+H4 --> H5 : addResult(scanner.nextInt = 4)
+H4 -> HighscoreListListener : listChanged(this, 2)
+
+state "HighscoreList" as H5
+H5 : maxSize = 5
+H5 : results = [4, 8, 10, 13]
+
+H5 --> H6 : addResult(scanner.nextInt = 3)
+H5 -> HighscoreListListener : listChanged(this, 0)
+
+state "HighscoreList" as H6
+H6 : maxSize = 5
+H6 : results = [3, 4, 8, 10, 13]
+
+H6 --> H7 : addResult(scanner.nextInt = 15)
+H6 -> HighscoreListListener : listChanged(this, 0)
+
+state "HighscoreList" as H7
+H7 : maxSize = 5
+H7 : results = [3, 4, 8, 10, 13]
+
+H7 --> H8 : addResult(scanner.nextInt = 13)
+H7 -> HighscoreListListener : listChanged(this, -1)
+
+state "HighscoreList" as H8
+H8 : maxSize = 5
+H8 : results = [3, 4, 8, 10, 13]
+
+H8 --> H9 : addResult(scanner.nextInt = 2)
+H8 -> HighscoreListListener : listChanged(this, -1)
+
+state "HighscoreList" as H9
+H9 : maxSize = 5
+H9 : results = [2, 3, 4, 8, 10]
+
+H9 --> H10 : addResult(scanner.nextInt = 2)
+H9 -> HighscoreListListener : listChanged(this, 0)
+
+state "HighscoreList" as H10
+H10 : maxSize = 5
+H10 : results = [2, 2, 3, 4, 8]
+
+H10 -> HighscoreListListener : listChanged(this, 1)
+
+@enduml
