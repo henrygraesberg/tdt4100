@@ -101,5 +101,21 @@ public class Train {
     t.addTrainCar(new CargoCar(1000, 3500));
 
     System.out.println(t);
+
+    //Testing without passenger cars and cargo cars to see that no errors occur with
+    //the getPassengerCount and getCargoWeight functions if there are no fitting cars
+    t = new Train();
+    t.addTrainCar(new TrainCar(1000));
+    t.addTrainCar(new CargoCar(1000, 2000));
+    t.addTrainCar(new CargoCar(1000, 3500));
+
+    System.out.println(t);
+
+    t = new Train();
+    t.addTrainCar(new TrainCar(1000));
+    t.addTrainCar(new PassengerCar(1200, 20));
+    t.addTrainCar(new PassengerCar(500, 2));
+
+    System.out.println(t);
   }
 }
