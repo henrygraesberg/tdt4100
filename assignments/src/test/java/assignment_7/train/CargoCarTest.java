@@ -1,9 +1,11 @@
-package oving7.train;
+package assignment_7.train;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import assignment_7.train.CargoCar;
 
 public class CargoCarTest {
 
