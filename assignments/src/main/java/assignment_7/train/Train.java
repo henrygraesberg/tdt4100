@@ -1,5 +1,8 @@
 package assignment_7.train;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The class {@code Train} represents a train that consists of one or more train
  * cars.
@@ -9,8 +12,7 @@ package assignment_7.train;
  * @see PassengerCar
  */
 public class Train {
-
-  // TODO: Add fields here
+  protected List<TrainCar> trainCars = new ArrayList<TrainCar>();
 
   /**
    * @param trainCar the train car to check for
@@ -20,8 +22,7 @@ public class Train {
    * @see TrainTest#testAddCarToTrain()
    */
   public boolean contains(TrainCar trainCar) {
-    // TODO: Implement this method
-    return false;
+    return trainCars.contains(trainCar);
   }
 
   /**
@@ -33,7 +34,10 @@ public class Train {
    * @see TrainTest#testAddCarToTrain()
    */
   public void addTrainCar(TrainCar trainCar) {
-    // TODO: Implement this method
+    if(trainCar == null)
+      throw new IllegalArgumentException("Cannot add a null train car");
+
+    trainCars.add(trainCar);
   }
 
   /**
@@ -44,8 +48,7 @@ public class Train {
    * @see TrainTest#testTotalTrainWeight()
    */
   public int getTotalWeight() {
-    // TODO: Implement this method
-    return 0;
+    return trainCars.stream().mapToInt(car -> car.getTotalWeight()).sum();
   }
 
   /**
@@ -55,8 +58,10 @@ public class Train {
    * @see TrainTest#testPassengerCount()
    */
   public int getPassengerCount() {
-    // TODO: Implement this method
-    return 0;
+    return trainCars.stream()
+                      .filter(car -> car instanceof PassengerCar)
+                      .mapToInt(car -> ((PassengerCar)car).getPassengerCount())
+                      .sum();
   }
 
   /**
@@ -66,8 +71,10 @@ public class Train {
    * @see TrainTest#testCargoWeight()
    */
   public int getCargoWeight() {
-    // TODO: Implement this method
-    return 0;
+  return trainCars.stream()
+                  .filter(car -> car instanceof CargoCar)
+                  .mapToInt(car -> ((CargoCar)car).getCargoWeight())
+                  .sum();
   }
 
   /**
@@ -77,10 +84,22 @@ public class Train {
    */
   @Override
   public String toString() {
-    return null;
+    List<String> trainCarString = new ArrayList<String>();
+    String returnTemplateString = "Total train weight: %1$d, Total passenger count: %2$d, Total cargo weight: %3$d, Train cars: %4$s";
+
+    trainCars.forEach(car -> trainCarString.add(String.format("(%s)", car)));
+    
+    return String.format(returnTemplateString, this.getTotalWeight(), this.getPassengerCount(), this.getCargoWeight(), trainCarString.toString());
   }
 
   public static void main(String[] args) {
-    // TODO: Write a main method to test the class
+    Train t = new Train();
+    t.addTrainCar(new TrainCar(1000));
+    t.addTrainCar(new PassengerCar(1200, 20));
+    t.addTrainCar(new PassengerCar(500, 2));
+    t.addTrainCar(new CargoCar(1000, 2000));
+    t.addTrainCar(new CargoCar(1000, 3500));
+
+    System.out.println(t);
   }
 }

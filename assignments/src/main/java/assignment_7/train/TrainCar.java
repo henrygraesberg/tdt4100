@@ -4,7 +4,9 @@ package assignment_7.train;
  * The class {@code TrainCar} represents a simple and general train car.
  */
 public class TrainCar {
-
+  protected int addedWeight, deadWeight;
+  protected String toStringTemplate = "Train car type: %s, Dead weight: %2$d, Total weight: %3$d";
+  
   /**
    * Constructor for a train car.
    * 
@@ -14,7 +16,7 @@ public class TrainCar {
    * @see TrainCarTest#testDeadWeight()
    */
   public TrainCar(int deadWeight) {
-    // TODO: Implement this constructor
+    this.setDeadWeight(deadWeight);
   }
 
   /**
@@ -26,7 +28,10 @@ public class TrainCar {
    * @see TrainCarTest#testDeadWeight()
    */
   public void setDeadWeight(int deadWeight) {
-    // TODO: Implement this method
+    if(deadWeight < 0)
+      throw new IllegalArgumentException("Dead weight cannot be negative");
+    
+    this.deadWeight = deadWeight;
   }
 
   /**
@@ -37,8 +42,7 @@ public class TrainCar {
    * @see TrainCarTest#testDeadWeight()
    */
   public int getDeadWeight() {
-    // TODO: Implement this method
-    return 0;
+    return this.deadWeight;
   }
 
   /**
@@ -51,8 +55,7 @@ public class TrainCar {
    * @see TrainCarTest#testDeadWeight()
    */
   public int getTotalWeight() {
-    // TODO: Implement this method
-    return 0;
+    return this.deadWeight + this.addedWeight;
   }
 
   /**
@@ -65,12 +68,7 @@ public class TrainCar {
    *         should also be included.
    */
   @Override
-  public String toString() {
-    // TODO: Implement this method
-    return null;
-  }
-
-  public static void main(String[] args) {
-
+  public String toString() {  
+    return String.format(toStringTemplate, "Generic car", this.getDeadWeight(), this.getTotalWeight());
   }
 }

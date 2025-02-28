@@ -9,8 +9,7 @@ package assignment_7.train;
  * @see CargoCar
  */
 public class PassengerCar extends TrainCar {
-
-  // TODO: Add fields here
+  protected int passengerCount;
 
   /**
    * Constructor for the passenger car.
@@ -23,8 +22,10 @@ public class PassengerCar extends TrainCar {
    * @see PassengerCarTest#testWeight()
    */
   public PassengerCar(int deadWeight, int passengerCount) {
-    // TODO: Implement this constructor
     super(deadWeight);
+    setPassengerCount(passengerCount);
+
+    this.toStringTemplate += ", Passenger count: %4$d";
   }
 
   /**
@@ -33,8 +34,7 @@ public class PassengerCar extends TrainCar {
    * @see PassengerCarTest#testWeight()
    */
   public int getPassengerCount() {
-    // TODO: Implement this method
-    return 0;
+    return this.passengerCount;
   }
 
   /**
@@ -44,26 +44,15 @@ public class PassengerCar extends TrainCar {
    * @see PassengerCarTest#testWeight()
    */
   public void setPassengerCount(int passengerCount) {
-    // TODO: Implement this method
-  }
+    if(passengerCount < 0)
+      throw new IllegalArgumentException("Passenger count cannot be negative");
 
-  @Override
-  public int getTotalWeight() {
-    // To calculate the total weight of the passenger car, you can assume that an
-    // average
-    // passenger weighs 80 kg
-
-    // TODO: Implement this method
-    return 0;
+    this.passengerCount = passengerCount;
+    this.addedWeight = passengerCount * 80;
   }
 
   @Override
   public String toString() {
-    // TODO: Implement this method
-    return null;
-  }
-
-  public static void main(String[] args) {
-
+    return String.format(toStringTemplate, "Passenger car", this.getDeadWeight(), this.getTotalWeight(), this.getPassengerCount());
   }
 }
