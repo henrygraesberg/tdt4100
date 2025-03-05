@@ -22,7 +22,7 @@ public class Train {
    * @see TrainTest#testAddCarToTrain()
    */
   public boolean contains(TrainCar trainCar) {
-    return trainCars.contains(trainCar);
+    return this.trainCars.contains(trainCar);
   }
 
   /**
@@ -37,7 +37,7 @@ public class Train {
     if(trainCar == null)
       throw new IllegalArgumentException("Cannot add a null train car");
 
-    trainCars.add(trainCar);
+    this.trainCars.add(trainCar);
   }
 
   /**
@@ -48,7 +48,7 @@ public class Train {
    * @see TrainTest#testTotalTrainWeight()
    */
   public int getTotalWeight() {
-    return trainCars.stream().mapToInt(car -> car.getTotalWeight()).sum();
+    return this.trainCars.stream().mapToInt(car -> car.getTotalWeight()).sum();
   }
 
   /**
@@ -58,7 +58,7 @@ public class Train {
    * @see TrainTest#testPassengerCount()
    */
   public int getPassengerCount() {
-    return trainCars.stream()
+    return this.trainCars.stream()
                       .filter(car -> car instanceof PassengerCar)
                       .mapToInt(car -> ((PassengerCar)car).getPassengerCount())
                       .sum();
@@ -71,7 +71,7 @@ public class Train {
    * @see TrainTest#testCargoWeight()
    */
   public int getCargoWeight() {
-  return trainCars.stream()
+  return this.trainCars.stream()
                   .filter(car -> car instanceof CargoCar)
                   .mapToInt(car -> ((CargoCar)car).getCargoWeight())
                   .sum();
@@ -85,11 +85,11 @@ public class Train {
   @Override
   public String toString() {
     List<String> trainCarString = new ArrayList<String>();
-    String returnTemplateString = "Total train weight: %1$d, Total passenger count: %2$d, Total cargo weight: %3$d, Train cars: %4$s";
+    String returnStringTemplate = "Total train weight: %1$d, Total passenger count: %2$d, Total cargo weight: %3$d, Train cars: %4$s";
 
-    trainCars.forEach(car -> trainCarString.add(String.format("(%s)", car)));
+    this.trainCars.forEach(car -> trainCarString.add(String.format("(%s)", car)));
     
-    return String.format(returnTemplateString, this.getTotalWeight(), this.getPassengerCount(), this.getCargoWeight(), trainCarString.toString());
+    return String.format(returnStringTemplate, this.getTotalWeight(), this.getPassengerCount(), this.getCargoWeight(), trainCarString.toString());
   }
 
   public static void main(String[] args) {
