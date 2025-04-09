@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with JUnit Testing (assignments directory)
+name: Java CI with JUnit Testing (project directory)
 
 on:
   push:
@@ -29,13 +29,13 @@ jobs:
         cache: maven
     - name: Test with JUnit
       run: |
-        cd assignments
+        cd project
         mvn clean test
     - name: Output test coverage results
-      run: cat assignments/target/site/jacoco/jacoco.csv
+      run: cat project/target/site/jacoco/jacoco.csv
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
         name: code-coverage-report
-        path: assignments/target/site/jacoco
+        path: project/target/site/jacoco
         if-no-files-found: warn
