@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -28,13 +31,15 @@ public class ExpenseFormController {
   private final String expensesFilename = "expenses.csv";
   private List<Person> people = new ArrayList<Person>();
   private List<Expense> expenses = new ArrayList<Expense>();
-  private List<Expense.Status> statuses = List.of(Expense.Status.values());
+  private List<Status> statuses = List.of(Status.values());
 
   @FXML TextField valueField, accountField, nameField, emailField, reasonField, manageNameField, manageEmailField, manageValueField, manageAccountField, manageReasonField;
   @FXML TextArea commentField, manageCommentField;
-  @FXML Button createExpenseButton;
+  @FXML Button createExpenseButton, sortButton;
   @FXML ListView<Expense> expensesList;
+  @FXML ChoiceBox<String> sortMethodSelector, ascendingDescendingSelector;
   @FXML RadioButton pendingRadio, paidRadio, rejectedRadio;
+  @FXML Label expenseRegisterTime;
   final ToggleGroup statusRadios = new ToggleGroup();
 
   /**
@@ -42,21 +47,40 @@ public class ExpenseFormController {
    */
   public ExpenseFormController() {
     ExpenseFileHandler.readCSV(expensesFilename).stream().forEach(expense -> addExpense(expense));
+
+    Collections.sort(expenses);
   }
 
   /**
-   * Ensures the radio buttons are grouped when switching to the "Manage expenses" tab,
-   * and populates the list of registered expenses
+   * Initializes the application by populating the items of the selection boxes,
+   * setting their default value, and grouping the radio buttons
    */
   @FXML
-  void onChangeToManage() {
+  void initialize() {
+    sortMethodSelector.setItems(FXCollections.observableList(List.of("Time", "Status", "Person")));
+    ascendingDescendingSelector.setItems(FXCollections.observableList(List.of("Ascending", "Descending")));
+
+    sortMethodSelector.setValue("Time");
+    ascendingDescendingSelector.setValue("Ascending");
+
     pendingRadio.setToggleGroup(statusRadios);
     paidRadio.setToggleGroup(statusRadios);
     rejectedRadio.setToggleGroup(statusRadios);
+  }
 
+  /**
+   * Populates the listView of expenses on changing to the "Manage expenses" tab,
+   * to ensure the information is up to date when switching between tabs
+   */
+  @FXML
+  void onChangeToManage() {
     updateListView();
   }
 
+  /**
+   * Updates the ListView component with the current list of expenses,
+   * by clearing the existing items and adds all expenses from the expenses list to prevent duplicates.
+   */
   void updateListView() {
     expensesList.getItems().clear();
     expensesList.getItems().addAll(expenses);
@@ -138,6 +162,29 @@ public class ExpenseFormController {
     }
   }
 
+  @FXML
+  void onSortExpenses() {
+    String sortingMethod = sortMethodSelector.getValue();
+    boolean ascending = ascendingDescendingSelector.getValue().equals("Ascending");
+
+    switch(sortingMethod) {
+      case "Time":
+        this.sortExpensesByTime(ascending);
+        break;
+      case "Status":
+        this.sortExpensesByStatus(ascending);
+        break;
+      case "Person":
+        this.sortExpensesByPerson(ascending);
+        break;
+      default:
+        showError("An Error Occured!", "An unknown error occured sorting the list!\nTry changing the sorting method");
+        break;
+    }
+
+    updateListView();
+  }
+
   /**
    * Display the values from the selected expense from the list view
    */
@@ -155,17 +202,23 @@ public class ExpenseFormController {
     manageReasonField.setText(selected.getReason());
     manageCommentField.setText(selected.getComment());
     radioButtons[statuses.indexOf(selected.getStatus())].setSelected(true);
+    expenseRegisterTime.setText(selected.getTimestamp().toString());
 
     // Enable all the radio buttons
     Stream.of(radioButtons).forEach(button -> button.setDisable(false));
   }
 
+  /**
+   * FXML handler method triggered when the status of an expense is updated in the UI.
+   * Gets the selected radio button, determines the associated status,
+   * and updates the status of the selected expense.
+   */
   @FXML
   void onUpdatedExpenseStatus() {
     List<RadioButton> radioButtons = List.of(pendingRadio, rejectedRadio, paidRadio);
 
     RadioButton activeButton = radioButtons.stream().filter(button -> button.isSelected()).toList().get(0);
-    Expense.Status selectedStatus = statuses.get(radioButtons.indexOf(activeButton));
+    Status selectedStatus = statuses.get(radioButtons.indexOf(activeButton));
 
     Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
 
@@ -178,6 +231,7 @@ public class ExpenseFormController {
    * @param title The title of the error dialog
    * @param message The error message to display
    */
+  @FXML
   private void showError(String title, String message) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle(title);
@@ -192,6 +246,7 @@ public class ExpenseFormController {
    * @param title The title of the information dialog
    * @param message The information message to display
    */
+  @FXML
   private void showInfo(String title, String message) {
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle(title);
@@ -237,7 +292,7 @@ public class ExpenseFormController {
     String comment = expense.getComment();
     UUID uuid = expense.getUUID();
     Instant timeStamp = expense.getTimestamp();
-    Expense.Status status = expense.getStatus();
+    Status status = expense.getStatus();
     Person person;
 
     List<Person> personExists = people.stream().filter(p -> p.isPerson(name, email)).toList();
@@ -287,11 +342,24 @@ public class ExpenseFormController {
     updateExpenseStatus(i, status);
   }
   
+  /**
+   * Deletes an expense at the specified index from the expenses list.
+   * Also removes the expense from the CSV file by replacing its line with an empty string.
+   *
+   * @param index The index of the expense to delete in the expenses list
+   */
   public void deleteExpense(int index) {
     this.expenses.remove(index);
 
     ExpenseFileHandler.updateExpenseLine(expensesFilename, index + 1, "");
   }
+
+  /**
+   * Deletes an expense identified by its UUID from the expenses list.
+   * Does nothing if no expense with the given UUID is found.
+   *
+   * @param uuid The UUID of the expense to delete
+   */
   public void deleteExpense(UUID uuid) {
     int i = 0;
 
@@ -304,6 +372,24 @@ public class ExpenseFormController {
     if(i > expenses.size()) return;
 
     deleteExpense(i);
+  }
+
+  public void sortExpensesByTime(boolean ascending) {
+    Collections.sort(expenses);
+
+    if(ascending) Collections.reverse(expenses);
+  }
+
+  public void sortExpensesByPerson(boolean ascending) {
+    expenses.sort(new ExpenseComparatorPerson());
+
+    if(ascending) Collections.reverse(expenses);
+  }
+
+  public void sortExpensesByStatus(boolean ascending) {
+    expenses.sort(new ExpenseComparatorStatus());
+
+    if(ascending) Collections.reverse(expenses);
   }
 
   public static void main(String[] args) {
@@ -340,7 +426,7 @@ public class ExpenseFormController {
     }
 
     // Randomly assign statuses to x expenses
-    Expense.Status[] statuses = Expense.Status.values();
+    Status[] statuses = Status.values();
     for (int i = 0; i < 100; i++) {
       if(controller.expenses.isEmpty()) break; // Safety check
       
@@ -348,7 +434,7 @@ public class ExpenseFormController {
       int randomExpenseIndex = (int)(Math.random() * controller.expenses.size());
       
       // Get random status
-      Expense.Status randomStatus = statuses[(int)(Math.random() * statuses.length)];
+      Status randomStatus = statuses[(int)(Math.random() * statuses.length)];
       
       // Update expense status
       controller.updateExpenseStatus(randomExpenseIndex, randomStatus);
