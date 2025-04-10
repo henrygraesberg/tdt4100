@@ -100,7 +100,7 @@
                      <children>
                         <AnchorPane layoutX="14.0" prefHeight="369.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="expensesList" editable="true" layoutY="39.0" onMouseClicked="#onRegisteredExpenseSelect" prefHeight="313.0" prefWidth="200.0" />
+                              <ListView fx:id="expensesList" editable="true" layoutY="39.0" onKeyPressed="#onRegisteredExpenseSelect" onMouseClicked="#onRegisteredExpenseSelect" onTouchPressed="#onRegisteredExpenseSelect" prefHeight="313.0" prefWidth="200.0" />
                               <Label layoutX="34.0" layoutY="11.0" text="Registered expenses">
                                  <font>
                                     <Font size="15.0" />
@@ -112,9 +112,9 @@
                            <children>
                               <AnchorPane layoutX="1.0" layoutY="290.0" prefHeight="53.0" prefWidth="392.0">
                                  <children>
-                                    <RadioButton fx:id="pendingRadio" disable="true" layoutX="14.0" layoutY="27.0" mnemonicParsing="false" text="Pending" />
-                                    <RadioButton fx:id="paidRadio" disable="true" layoutX="173.0" layoutY="27.0" mnemonicParsing="false" text="Paid" />
-                                    <RadioButton fx:id="rejectedRadio" disable="true" layoutX="306.0" layoutY="27.0" mnemonicParsing="false" text="Rejected" />
+                                    <RadioButton fx:id="pendingRadio" disable="true" layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Pending" />
+                                    <RadioButton fx:id="paidRadio" disable="true" layoutX="173.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Paid" />
+                                    <RadioButton fx:id="rejectedRadio" disable="true" layoutX="306.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Rejected" />
                                     <Label layoutX="176.0" layoutY="5.0" text="Status">
                                        <font>
                                           <Font size="15.0" />

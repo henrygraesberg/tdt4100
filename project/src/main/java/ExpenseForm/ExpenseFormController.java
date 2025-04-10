@@ -28,6 +28,7 @@ public class ExpenseFormController {
   private final String expensesFilename = "expenses.csv";
   private List<Person> people = new ArrayList<Person>();
   private List<Expense> expenses = new ArrayList<Expense>();
+  private List<Expense.Status> statuses = List.of(Expense.Status.values());
 
   @FXML TextField valueField, accountField, nameField, emailField, reasonField, manageNameField, manageEmailField, manageValueField, manageAccountField, manageReasonField;
   @FXML TextArea commentField, manageCommentField;
@@ -137,22 +138,38 @@ public class ExpenseFormController {
     }
   }
 
+  /**
+   * Display the values from the selected expense from the list view
+   */
   @FXML
   void onRegisteredExpenseSelect() {
-    RadioButton[] radioButtons = {pendingRadio, paidRadio, rejectedRadio};
-    List<Expense.Status> statuses = List.of(Expense.Status.values());
+    RadioButton[] radioButtons = {pendingRadio, rejectedRadio, paidRadio};
 
     Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
 
+    // Update text fields with the values of the selected expense
     manageValueField.setText(String.valueOf(selected.getValue()));
     manageAccountField.setText(String.valueOf(selected.getAccountNr()));
     manageNameField.setText(selected.getPersonName());
     manageEmailField.setText(selected.getPersonEmail());
     manageReasonField.setText(selected.getReason());
     manageCommentField.setText(selected.getComment());
-
-    Stream.of(radioButtons).forEach(button -> button.setDisable(false));
     radioButtons[statuses.indexOf(selected.getStatus())].setSelected(true);
+
+    // Enable all the radio buttons
+    Stream.of(radioButtons).forEach(button -> button.setDisable(false));
+  }
+
+  @FXML
+  void onUpdatedExpenseStatus() {
+    List<RadioButton> radioButtons = List.of(pendingRadio, rejectedRadio, paidRadio);
+
+    RadioButton activeButton = radioButtons.stream().filter(button -> button.isSelected()).toList().get(0);
+    Expense.Status selectedStatus = statuses.get(radioButtons.indexOf(activeButton));
+
+    Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
+
+    this.updateExpenseStatus(selected.getUUID(), selectedStatus);
   }
 
   /**
