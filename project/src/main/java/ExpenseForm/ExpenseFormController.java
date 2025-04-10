@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import ExpenseForm.comparators.ExpenseComparatorPerson;
 import ExpenseForm.comparators.ExpenseComparatorStatus;
 import ExpenseForm.model.Expense;
@@ -24,16 +28,38 @@ public class ExpenseFormController {
   private final String expensesFilename = "expenses.csv";
   private List<Person> people = new ArrayList<Person>();
   private List<Expense> expenses = new ArrayList<Expense>();
+  private List<Expense.Status> statuses = List.of(Expense.Status.values());
 
-  @FXML TextField valueField, accountField, nameField, emailField, reasonField;
-  @FXML TextArea commentField;
+  @FXML TextField valueField, accountField, nameField, emailField, reasonField, manageNameField, manageEmailField, manageValueField, manageAccountField, manageReasonField;
+  @FXML TextArea commentField, manageCommentField;
   @FXML Button createExpenseButton;
+  @FXML ListView<Expense> expensesList;
+  @FXML RadioButton pendingRadio, paidRadio, rejectedRadio;
+  final ToggleGroup statusRadios = new ToggleGroup();
 
   /**
    * Constructor that initializes the controller by loading existing expenses from the CSV file.
    */
   public ExpenseFormController() {
     ExpenseFileHandler.readCSV(expensesFilename).stream().forEach(expense -> addExpense(expense));
+  }
+
+  /**
+   * Ensures the radio buttons are grouped when switching to the "Manage expenses" tab,
+   * and populates the list of registered expenses
+   */
+  @FXML
+  void onChangeToManage() {
+    pendingRadio.setToggleGroup(statusRadios);
+    paidRadio.setToggleGroup(statusRadios);
+    rejectedRadio.setToggleGroup(statusRadios);
+
+    updateListView();
+  }
+
+  void updateListView() {
+    expensesList.getItems().clear();
+    expensesList.getItems().addAll(expenses);
   }
 
   /**
@@ -110,6 +136,40 @@ public class ExpenseFormController {
     } catch (Exception e) {
       showError("Error", "An unexpected error occurred: " + e.getMessage());
     }
+  }
+
+  /**
+   * Display the values from the selected expense from the list view
+   */
+  @FXML
+  void onRegisteredExpenseSelect() {
+    RadioButton[] radioButtons = {pendingRadio, rejectedRadio, paidRadio};
+
+    Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
+
+    // Update text fields with the values of the selected expense
+    manageValueField.setText(String.valueOf(selected.getValue()));
+    manageAccountField.setText(String.valueOf(selected.getAccountNr()));
+    manageNameField.setText(selected.getPersonName());
+    manageEmailField.setText(selected.getPersonEmail());
+    manageReasonField.setText(selected.getReason());
+    manageCommentField.setText(selected.getComment());
+    radioButtons[statuses.indexOf(selected.getStatus())].setSelected(true);
+
+    // Enable all the radio buttons
+    Stream.of(radioButtons).forEach(button -> button.setDisable(false));
+  }
+
+  @FXML
+  void onUpdatedExpenseStatus() {
+    List<RadioButton> radioButtons = List.of(pendingRadio, rejectedRadio, paidRadio);
+
+    RadioButton activeButton = radioButtons.stream().filter(button -> button.isSelected()).toList().get(0);
+    Expense.Status selectedStatus = statuses.get(radioButtons.indexOf(activeButton));
+
+    Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
+
+    this.updateExpenseStatus(selected.getUUID(), selectedStatus);
   }
 
   /**

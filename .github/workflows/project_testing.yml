@@ -27,10 +27,30 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    - name: Set up virtual display
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        echo "DISPLAY=:99" >> $GITHUB_ENV
     - name: Test with JUnit
       run: |
         cd project
         mvn clean test
+    - name: Check JavaFX application launch
+      run: |
+        cd project
+        # Using timeout to ensure the process doesn't run indefinitely
+        # The JavaFX app will launch and then terminate after 10 seconds
+        timeout 30s mvn javafx:run -Djavafx.headless=true -Dprism.order=sw || code=$?
+        # timeout exits with status 124 when it kills the process, which we consider success
+        if [ $code -eq 124 ] || [ $code -eq 0 ]; then
+          echo "JavaFX application launched successfully"
+          exit 0
+        else
+          echo "JavaFX application failed to launch"
+          exit $code
+        fi
     - name: Output test coverage results
       run: cat project/target/site/jacoco/jacoco.csv
       continue-on-error: true
