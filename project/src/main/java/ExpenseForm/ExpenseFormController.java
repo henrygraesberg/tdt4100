@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -30,6 +31,7 @@ public class ExpenseFormController {
   @FXML TextField valueField, accountField, nameField, emailField, reasonField, manageNameField, manageEmailField, manageValueField, manageAccountField, manageReasonField;
   @FXML TextArea commentField, manageCommentField;
   @FXML Button createExpenseButton;
+  @FXML ListView<Expense> expensesList;
   @FXML RadioButton pendingRadio, paidRadio, rejectedRadio;
   final ToggleGroup statusRadios = new ToggleGroup();
 
@@ -40,16 +42,18 @@ public class ExpenseFormController {
     ExpenseFileHandler.readCSV(expensesFilename).stream().forEach(expense -> addExpense(expense));
   }
 
-  @FXML
   /**
-   * Ensures the radio buttons are grouped when switching to the "Manage expenses" tab
+   * Ensures the radio buttons are grouped when switching to the "Manage expenses" tab,
+   * and populates the list of registered expenses
    */
+  @FXML
   void onChangeToManage() {
     pendingRadio.setToggleGroup(statusRadios);
     paidRadio.setToggleGroup(statusRadios);
     rejectedRadio.setToggleGroup(statusRadios);
-
-    showInfo("succ", "Grouped radio buttons");
+    
+    expensesList.getItems().clear();
+    expensesList.getItems().addAll(expenses);
   }
 
   /**
