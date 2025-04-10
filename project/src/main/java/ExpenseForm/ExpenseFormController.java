@@ -105,7 +105,11 @@ public class ExpenseFormController {
       }
       
       // Validate email format (basic validation)
-      if (!emailField.getText().contains("@") || !emailField.getText().contains(".")) {
+      if (
+          !emailField.getText().contains("@") ||
+          !emailField.getText().contains(".") ||
+          emailField.getText().contains(",")
+        ) {
         showError("Invalid Email", "Please enter a valid email address.");
         return;
       }
@@ -226,6 +230,13 @@ public class ExpenseFormController {
     Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
 
     this.updateExpenseStatus(selected.getUUID(), selectedStatus);
+
+    // Update the list view so that the correct status is shown in the list
+    updateListView();
+
+    // Updating the list view will unselect the item, causing the radio buttons to become unresponsive,
+    // so we select the selected item again to prevent this
+    expensesList.getSelectionModel().select(selected);
   }
 
   /**

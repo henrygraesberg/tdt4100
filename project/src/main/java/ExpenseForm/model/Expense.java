@@ -62,11 +62,16 @@ public class Expense implements Comparable<Expense> {
    * @param status The current status of the expense
    */
   public Expense(float value, long accountNr, Person person, String reason, String comment, UUID uuid, Instant timestamp, Status status) {
-    this(value, accountNr, person, reason, comment);
-
-    this.uuid = uuid;
     this.timestamp = timestamp;
+    this.uuid = uuid;
+    this.value = value;
+    this.accountNr = accountNr;
+    this.reason = reason;
+    this.comment = comment;
+    this.person = person;
     this.status = status;
+
+    person.addExpense(this);
   }
 
   /**
