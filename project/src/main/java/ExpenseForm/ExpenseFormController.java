@@ -8,10 +8,15 @@ import java.util.List;
 import java.util.UUID;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import ExpenseForm.comparators.ExpenseComparatorPerson;
 import ExpenseForm.comparators.ExpenseComparatorStatus;
 import ExpenseForm.model.Expense;
+import ExpenseForm.model.Expense.Status;
 import ExpenseForm.model.Person;
 import ExpenseForm.utils.ExpenseFileHandler;
 
@@ -20,7 +25,9 @@ public class ExpenseFormController {
   private List<Person> people = new ArrayList<Person>();
   private List<Expense> expenses = new ArrayList<Expense>();
 
-  @FXML TextField valueField, accountField, nameField, emailField, reasonField, commentField;
+  @FXML TextField valueField, accountField, nameField, emailField, reasonField;
+  @FXML TextArea commentField;
+  @FXML Button createExpenseButton;
 
   /**
    * Constructor that initializes the controller by loading existing expenses from the CSV file.
@@ -31,25 +38,106 @@ public class ExpenseFormController {
 
   /**
    * FXML handler method that creates a new expense from the form field values.
-   * Clears all fields after creating the expense.
+   * Performs validation before creating the expense and shows error messages if input is invalid.
+   * Clears all fields after successfully creating the expense.
    */
   @FXML
-  void createNewExpense() {
-    addNewExpense(
-      Float.parseFloat(valueField.getText()),
-      Integer.parseInt(accountField.getText()),
-      nameField.getText(),
-      emailField.getText(),
-      reasonField.getText(),
-      commentField.getText()
-    );
+  void onCreateExpense() {
+    try {
+      // Validate required fields
+      if (nameField.getText().trim().isEmpty() || 
+          emailField.getText().trim().isEmpty() || 
+          valueField.getText().trim().isEmpty() || 
+          accountField.getText().trim().isEmpty() || 
+          reasonField.getText().trim().isEmpty()) {
+        showError("Missing Information", "Please fill in all required fields.");
+        return;
+      }
+      
+      // Validate email format (basic validation)
+      if (!emailField.getText().contains("@") || !emailField.getText().contains(".")) {
+        showError("Invalid Email", "Please enter a valid email address.");
+        return;
+      }
+      
+      // Validate numeric fields
+      float value;
+      long accountNr;
+      
+      try {
+        value = Float.parseFloat(valueField.getText());
+        if (value <= 0) {
+          showError("Invalid Value", "Value must be a positive number.");
+          return;
+        }
+      } catch (NumberFormatException e) {
+        showError("Invalid Value", "Please enter a valid numeric value.");
+        return;
+      }
+      
+      try {
+        accountNr = Long.parseLong(accountField.getText());
+        if (accountNr <= 0) {
+          showError("Invalid Account Number", "Account number must be a positive number.");
+          return;
+        }
+      } catch (NumberFormatException e) {
+        showError("Invalid Account Number", "Please enter a valid account number.");
+        return;
+      }
+      
+      // All validations passed, create the expense
+      addNewExpense(
+        value,
+        accountNr,
+        nameField.getText(),
+        emailField.getText(),
+        reasonField.getText(),
+        commentField.getText()
+      );
 
-    valueField.setText("");
-    accountField.setText("");
-    nameField.setText("");
-    emailField.setText("");
-    reasonField.setText("");
-    commentField.setText("");
+      // Clear fields after successful creation
+      valueField.clear();
+      accountField.clear();
+      nameField.clear();
+      emailField.clear();
+      reasonField.clear();
+      commentField.clear();
+      
+      // Show success message
+      showInfo("Expense Created", "Your expense has been successfully registered.");
+      
+    } catch (Exception e) {
+      showError("Error", "An unexpected error occurred: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Shows an error alert dialog with the specified title and message.
+   * 
+   * @param title The title of the error dialog
+   * @param message The error message to display
+   */
+  private void showError(String title, String message) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
+  
+  /**
+   * Shows an information alert dialog with the specified title and message.
+   * 
+   * @param title The title of the information dialog
+   * @param message The information message to display
+   */
+  private void showInfo(String title, String message) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 
   /**
@@ -111,7 +199,7 @@ public class ExpenseFormController {
    * @param index The index of the expense in the expenses list
    * @param newStatus The new status to set for the expense
    */
-  public void updateExpenseStatus(int index, Expense.Status newStatus) {
+  public void updateExpenseStatus(int index, Status newStatus) {
     this.expenses.get(index).setStatus(newStatus);
     String updatedExpenseString = this.expenses.get(index).toStringAll();
 
@@ -125,7 +213,7 @@ public class ExpenseFormController {
    * @param uuid The UUID of the expense to update
    * @param status The new status to set for the expense
    */
-  public void updateExpenseStatus(UUID uuid, Expense.Status status) {
+  public void updateExpenseStatus(UUID uuid, Status status) {
     int i = 0;
 
     for (Expense expense : expenses) {

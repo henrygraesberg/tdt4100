@@ -37,7 +37,6 @@ public class Expense implements Comparable<Expense> {
     // We use a lot of info to generate UUIDs, since regular time based UUIDs can be identical if we create many expense reports at the same time
     // (Such as if we multithread or even just make some right after each other on the same thread on a fast computer)
     // If we didn't include the time, the same person could for example buy a pizza for the company a couple weeks apart, and end up with the same uuid
-    // Since we use the uuid for the image of the receipt, having multiple expenses with the same uuid, would mean having the later one overwrite the image of the receipt
     this.uuid = UuidCreator.getNameBasedSha1(person.getName() + person.getEmail() + reason + value + this.timestamp);
     this.value = value;
     this.accountNr = accountNr;
