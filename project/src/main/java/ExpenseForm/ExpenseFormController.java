@@ -377,19 +377,19 @@ public class ExpenseFormController {
   public void sortExpensesByTime(boolean ascending) {
     Collections.sort(expenses);
 
-    if(ascending) Collections.reverse(expenses);
+    if(!ascending) Collections.reverse(expenses);
   }
 
   public void sortExpensesByPerson(boolean ascending) {
     expenses.sort(new ExpenseComparatorPerson());
 
-    if(ascending) Collections.reverse(expenses);
+    if(!ascending) Collections.reverse(expenses);
   }
 
   public void sortExpensesByStatus(boolean ascending) {
     expenses.sort(new ExpenseComparatorStatus());
 
-    if(ascending) Collections.reverse(expenses);
+    if(!ascending) Collections.reverse(expenses);
   }
 
   public static void main(String[] args) {
