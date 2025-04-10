@@ -33,6 +33,7 @@ jobs:
         mvn clean test
     - name: Output test coverage results
       run: cat project/target/site/jacoco/jacoco.csv
+      continue-on-error: true
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
