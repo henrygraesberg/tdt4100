@@ -36,6 +36,12 @@ public class Person implements Comparable<Person> {
     return this.name;
   }
 
+  /**
+   * Splits the person's name into first name(s) and last name.
+   * Assumes the last word in the name is the last name, and everything before is the first name(s).
+   * 
+   * @return A string array where index 0 contains all first names and index 1 contains the last name
+   */
   public String[] getNameSplit() {
     String[] namesSplit = this.name.split(" ");
     String lastName = namesSplit[namesSplit.length - 1];
@@ -106,6 +112,15 @@ public class Person implements Comparable<Person> {
                     .sum();
   }
 
+  /**
+   * Compares this person with another person for order based on last name, then first name.
+   * This method is used for sorting people in alphabetical order by last name first,
+   * then by first name if last names are identical.
+   *
+   * @param otherPerson The person to be compared
+   * @return A negative integer, zero, or positive integer as this person is
+   *         less than, equal to, or greater than the specified person
+   */
   @Override
   public int compareTo(Person otherPerson) {
     String[] thisNames = this.getNameSplit();
