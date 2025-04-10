@@ -38,10 +38,18 @@ public class ExpenseFormController {
    */
   public ExpenseFormController() {
     ExpenseFileHandler.readCSV(expensesFilename).stream().forEach(expense -> addExpense(expense));
+  }
 
+  @FXML
+  /**
+   * Ensures the radio buttons are grouped when switching to the "Manage expenses" tab
+   */
+  void onChangeToManage() {
     pendingRadio.setToggleGroup(statusRadios);
     paidRadio.setToggleGroup(statusRadios);
     rejectedRadio.setToggleGroup(statusRadios);
+
+    showInfo("succ", "Grouped radio buttons");
   }
 
   /**
