@@ -42,9 +42,9 @@ jobs:
         cd project
         # Using timeout to ensure the process doesn't run indefinitely
         # The JavaFX app will launch and then terminate after 10 seconds
-        timeout 30s mvn javafx:run -Djavafx.headless=true -Dprism.order=sw || code=$?
+        timeout 30s mvn javafx:run -Djavafx.headless=true -Dprism.order=sw
+        code=$? # Capture the exit code immediately after the timeout command
         # timeout exits with status 124 when it kills the process, which we consider success
-        if [ $code -eq 124 ] || [ $code -eq 0 ]; then
           echo "JavaFX application launched successfully"
           exit 0
         else
