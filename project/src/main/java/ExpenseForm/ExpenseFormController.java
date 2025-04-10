@@ -178,8 +178,7 @@ public class ExpenseFormController {
         this.sortExpensesByPerson(ascending);
         break;
       default:
-        showError("An Error Occured!", "An unknown error occured sorting the list!\nTry changing the sorting method");
-        break;
+        showError("An Error Occurred!", "An unknown error occurred sorting the list!\nTry changing the sorting method");
     }
 
     updateListView();
