@@ -115,7 +115,7 @@
                                     <RadioButton fx:id="pendingRadio" disable="true" layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Pending" />
                                     <RadioButton fx:id="paidRadio" disable="true" layoutX="173.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Paid" />
                                     <RadioButton fx:id="rejectedRadio" disable="true" layoutX="306.0" layoutY="27.0" mnemonicParsing="false" onAction="#onUpdatedExpenseStatus" text="Rejected" />
-                                    <Label layoutX="176.0" layoutY="5.0" text="Status">
+                                    <Label layoutX="176.0" layoutY="3.0" text="Status">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -125,32 +125,50 @@
                               <AnchorPane prefHeight="57.0" prefWidth="236.0">
                                  <children>
                                     <TextField fx:id="manageNameField" editable="false" layoutX="-3.0" layoutY="26.0" prefHeight="26.0" prefWidth="197.0" promptText="John Doe" />
-                                    <Text layoutX="62.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full name" textAlignment="CENTER" wrappingWidth="68.630859375" />
+                                    <Text layoutX="62.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full name" textAlignment="CENTER" wrappingWidth="68.630859375">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
                                     <AnchorPane layoutX="195.0" layoutY="2.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="204.0">
                                        <children>
                                           <TextField fx:id="manageEmailField" editable="false" layoutX="1.0" layoutY="24.0" prefHeight="26.0" prefWidth="197.0" promptText="name@email.com" />
-                                          <Text layoutX="66.0" layoutY="9.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" textAlignment="CENTER" wrappingWidth="68.630859375" />
+                                          <Text layoutX="66.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" textAlignment="CENTER" wrappingWidth="68.630859375">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font></Text>
                                        </children>
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
                               <TextField fx:id="manageValueField" layoutX="-2.0" layoutY="82.0" prefHeight="26.0" prefWidth="197.0" promptText="123.45" />
-                              <Text layoutX="63.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value" textAlignment="CENTER" wrappingWidth="68.630859375" />
+                              <Text layoutX="63.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value" textAlignment="CENTER" wrappingWidth="68.630859375">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Text>
                               <AnchorPane layoutX="196.0" layoutY="58.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="204.0">
                                  <children>
                                     <TextField fx:id="manageAccountField" editable="false" layoutX="1.0" layoutY="24.0" prefHeight="26.0" prefWidth="197.0" promptText="12345678901" />
-                                    <Text layoutX="66.0" layoutY="9.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account nr." textAlignment="CENTER" wrappingWidth="68.630859375" />
+                                    <Text layoutX="39.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account nr." textAlignment="CENTER" wrappingWidth="120.630859375">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="1.0" layoutY="125.0" prefHeight="54.0" prefWidth="398.0">
                                  <children>
                                     <TextField fx:id="manageReasonField" editable="false" layoutX="52.0" layoutY="24.0" prefHeight="26.0" prefWidth="298.0" promptText="Description of the purchase" />
-                                    <Text layoutX="165.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase" textAlignment="CENTER" wrappingWidth="68.630859375" />
+                                    <Text layoutX="165.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase" textAlignment="CENTER" wrappingWidth="68.630859375">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="1.0" layoutY="181.0" prefHeight="109.0" prefWidth="398.0">
                                  <children>
-                                    <Text layoutX="165.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comment" textAlignment="CENTER" wrappingWidth="68.630859375" />
+                                    <Text layoutX="165.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comment" textAlignment="CENTER" wrappingWidth="68.630859375">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Text>
                                     <TextArea fx:id="manageCommentField" editable="false" layoutX="53.0" layoutY="22.0" prefHeight="85.0" prefWidth="298.0" promptText="A deeper description behind the reason for the purchase" wrapText="true" />
                                  </children>
                               </AnchorPane>
