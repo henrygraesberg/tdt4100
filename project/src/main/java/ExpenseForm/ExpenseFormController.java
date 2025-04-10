@@ -11,8 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import ExpenseForm.comparators.ExpenseComparatorPerson;
 import ExpenseForm.comparators.ExpenseComparatorStatus;
 import ExpenseForm.model.Expense;
@@ -25,15 +27,21 @@ public class ExpenseFormController {
   private List<Person> people = new ArrayList<Person>();
   private List<Expense> expenses = new ArrayList<Expense>();
 
-  @FXML TextField valueField, accountField, nameField, emailField, reasonField;
-  @FXML TextArea commentField;
+  @FXML TextField valueField, accountField, nameField, emailField, reasonField, manageNameField, manageEmailField, manageValueField, manageAccountField, manageReasonField;
+  @FXML TextArea commentField, manageCommentField;
   @FXML Button createExpenseButton;
+  @FXML RadioButton pendingRadio, paidRadio, rejectedRadio;
+  final ToggleGroup statusRadios = new ToggleGroup();
 
   /**
    * Constructor that initializes the controller by loading existing expenses from the CSV file.
    */
   public ExpenseFormController() {
     ExpenseFileHandler.readCSV(expensesFilename).stream().forEach(expense -> addExpense(expense));
+
+    pendingRadio.setToggleGroup(statusRadios);
+    paidRadio.setToggleGroup(statusRadios);
+    rejectedRadio.setToggleGroup(statusRadios);
   }
 
   /**
