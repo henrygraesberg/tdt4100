@@ -100,7 +100,7 @@
                      <children>
                         <AnchorPane layoutX="14.0" prefHeight="369.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="expensesList" layoutY="39.0" prefHeight="313.0" prefWidth="200.0" />
+                              <ListView fx:id="expensesList" editable="true" layoutY="39.0" onMouseClicked="#onRegisteredExpenseSelect" prefHeight="313.0" prefWidth="200.0" />
                               <Label layoutX="34.0" layoutY="11.0" text="Registered expenses">
                                  <font>
                                     <Font size="15.0" />
@@ -134,11 +134,11 @@
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <TextField fx:id="manageValueField" editable="false" layoutX="-2.0" layoutY="82.0" prefHeight="26.0" prefWidth="197.0" promptText="123.45" />
+                              <TextField fx:id="manageValueField" layoutX="-2.0" layoutY="82.0" prefHeight="26.0" prefWidth="197.0" promptText="123.45" />
                               <Text layoutX="63.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value" textAlignment="CENTER" wrappingWidth="68.630859375" />
                               <AnchorPane layoutX="196.0" layoutY="58.0" minWidth="-Infinity" prefHeight="57.0" prefWidth="204.0">
                                  <children>
-                                    <TextField fx:id="ManageAccountField" editable="false" layoutX="1.0" layoutY="24.0" prefHeight="26.0" prefWidth="197.0" promptText="12345678901" />
+                                    <TextField fx:id="manageAccountField" editable="false" layoutX="1.0" layoutY="24.0" prefHeight="26.0" prefWidth="197.0" promptText="12345678901" />
                                     <Text layoutX="66.0" layoutY="9.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account nr." textAlignment="CENTER" wrappingWidth="68.630859375" />
                                  </children>
                               </AnchorPane>

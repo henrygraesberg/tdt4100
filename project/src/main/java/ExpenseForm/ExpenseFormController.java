@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -51,7 +52,11 @@ public class ExpenseFormController {
     pendingRadio.setToggleGroup(statusRadios);
     paidRadio.setToggleGroup(statusRadios);
     rejectedRadio.setToggleGroup(statusRadios);
-    
+
+    updateListView();
+  }
+
+  void updateListView() {
     expensesList.getItems().clear();
     expensesList.getItems().addAll(expenses);
   }
@@ -130,6 +135,24 @@ public class ExpenseFormController {
     } catch (Exception e) {
       showError("Error", "An unexpected error occurred: " + e.getMessage());
     }
+  }
+
+  @FXML
+  void onRegisteredExpenseSelect() {
+    RadioButton[] radioButtons = {pendingRadio, paidRadio, rejectedRadio};
+    List<Expense.Status> statuses = List.of(Expense.Status.values());
+
+    Expense selected = expensesList.getSelectionModel().getSelectedItems().get(0);
+
+    manageValueField.setText(String.valueOf(selected.getValue()));
+    manageAccountField.setText(String.valueOf(selected.getAccountNr()));
+    manageNameField.setText(selected.getPersonName());
+    manageEmailField.setText(selected.getPersonEmail());
+    manageReasonField.setText(selected.getReason());
+    manageCommentField.setText(selected.getComment());
+
+    Stream.of(radioButtons).forEach(button -> button.setDisable(false));
+    radioButtons[statuses.indexOf(selected.getStatus())].setSelected(true);
   }
 
   /**
