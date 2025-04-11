@@ -1,0 +1,60 @@
+@startuml Expense Class Diagram
+
+' Class definition for Expense
+class Expense {
+  - uuid: UUID
+  - timestamp: Instant
+  - value: float
+  - accountNr: long
+  - reason: String
+  - comment: String
+  - status: Status
+  + Expense(value: float, accountNr: long, person: Person, reason: String, comment: String)
+  + Expense(value: float, accountNr: long, person: Person, reason: String, comment: String, uuid: UUID, timestamp: Instant, status: Status)
+  + setStatus(status: Status): void
+  + getUUID(): UUID
+  + getValue(): float
+  + getAccountNr(): long
+  + getReason(): String
+  + getComment(): String
+  + getPerson(): Person
+  + getPersonName(): String
+  + getPersonEmail(): String
+  + getStatus(): Status
+  + getTimestamp(): Instant
+  + equals(obj: Object): boolean
+  + compareTo(otherExpense: Expense): int
+  + toString(): String
+  + toStringAll(): String
+}
+
+' Status enum
+enum Status {
+  PENDING
+  REJECTED
+  PAID
+}
+
+' Person class (simplified for relation)
+class Person {
+  - name: String
+  - email: String
+  - expenses: List<Expense>
+  + addExpense(expense: Expense): void
+  + getExpenses(): List<Expense>
+  ' ...other methods omitted for clarity
+}
+
+' Relationships
+Expense --> Status: status
+Expense --> Person: person
+Person --> Expense: expenses*
+
+' Interfaces
+interface Comparable<Expense> {
+  + compareTo(otherExpense: Expense): int
+}
+
+Expense ..|> Comparable
+
+@enduml
