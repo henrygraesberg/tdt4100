@@ -43,20 +43,17 @@ public class ExpenseFileHandlerTest {
       expense2 = new Expense(200.0f, 12345678901L, person, "Lunch", "Team lunch", expense2uuid, expense2timestamp, Expense.Status.PAID);
   }
 
-	@Test
 	void testReadNonExistingFile() {
 		ArrayList<Expense> emptyArrayList = ExpenseFileHandler.readCSV(FILE_NAME);
 
 		assertArrayEquals(new Expense[]{}, emptyArrayList.toArray(new Expense[]{}));
 	}
 
-	@Test
 	void testWriteToFile() {
 		ExpenseFileHandler.writeExpenseToFile(FILE_NAME, expense1);
 		ExpenseFileHandler.writeExpenseToFile(FILE_NAME, expense2);
 	}
 
-	@Test
 	void testNotEmptyFile() {
 		ArrayList<Expense> expensesArrayList = ExpenseFileHandler.readCSV(FILE_NAME);
 
@@ -64,5 +61,12 @@ public class ExpenseFileHandlerTest {
 			new Expense[]{expense1, expense2}, 
 			expensesArrayList.toArray(new Expense[]{})
 		);
+	}
+	
+	@Test
+	void testEverytingInOrder() {
+		testReadNonExistingFile();
+		testWriteToFile();
+		testNotEmptyFile();
 	}
 }
