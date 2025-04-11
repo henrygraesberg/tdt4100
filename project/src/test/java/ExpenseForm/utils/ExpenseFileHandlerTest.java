@@ -2,6 +2,7 @@ package ExpenseForm.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -65,6 +66,8 @@ public class ExpenseFileHandlerTest {
 	
 	@Test
 	void testEverytingInOrder() {
+		new File(FILE_NAME).delete();
+
 		testReadNonExistingFile();
 		testWriteToFile();
 		testNotEmptyFile();
