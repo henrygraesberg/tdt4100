@@ -15,8 +15,7 @@ Klassediagrammet viser implementasjonen av Expense-klassen. Dette er kjerneklass
 
 	Sv: Selv om prosjektet dekker mye av pensum, er det noen konsepter som kunne vært ytterligere integrert:
 	- Arv: Man kunne implementert en abstrakt baseklasse `User` som `Person` arver fra, med mulighet for forskjellige brukertyper (f.eks. administrator vs. vanlig bruker). Dette kunne f.eks. bli brukt for å gi tilgang til administrasjons-tabben og hvis jeg holder styr på brukeren som har åpnet appen, kunne jeg også ha autofyll på personinformasjonen (navn og epost) når man registrerer utlegg.
-	- Observatør-mønsteret: Man kunne implementert et observatør-grensesnitt for å oppdatere UI automatisk når modellen endres, spesielt nyttig for å reflektere endringer i utgiftsstatus.
-	- Generics: Man kunne utviklet en mer generisk håndtering av persistens med en generisk klasse som `DataHandler<T>` for å håndtere lagring og lasting av ulike objekttyper.
+	- Observatør-observert-mønsteret: Man kunne implementert et observatør-grensesnitt for å oppdatere UI automatisk når modellen endres, spesielt nyttig for å reflektere endringer i utgiftsstatus.
 
 3. Sp: Hvordan forholder koden deres seg til Model-View-Controller-prinsippet? (Merk: det er ikke nødvendig at koden er helt perfekt i forhold til Model-View-Controller standarder. Det er mulig (og bra) å reflektere rundt svakheter i egen kode)
 
