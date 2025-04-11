@@ -173,6 +173,13 @@ public class Expense implements Comparable<Expense> {
     return this.timestamp;
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if(obj.getClass() != Expense.class) return false;
+
+    return this.toString().equals(obj.toString());
+  }
+
   /**
    * Compares this expense with another expense based on timestamp.
    *

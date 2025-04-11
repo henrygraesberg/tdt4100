@@ -29,7 +29,8 @@ public class ExpenseFileHandler {
     try {
       Scanner fileReader = new Scanner(new FileReader(filename));
 
-      //First line contains header information to make csv more human readable
+      // First line contains header information to make csv more human readable,
+      // so we skip it
       fileReader.nextLine();
       int lineNr = 1;
 
