@@ -111,7 +111,10 @@ class PersonTest {
             100.0f, 12345678901L, person, "Office supplies", "Bought pens",
             uuid, timestamp, Expense.Status.PENDING
         );
-        
+       
+        // Assert that duplicateExpense is actually a duplicate of expense1, or else the duplicate should be added
+        assertEquals(expense1, duplicateExpense);
+
         // The person should still have just 2 expenses (the duplicate shouldn't be added)
         assertEquals(2, person.getAmountOfExpenses());
     }
