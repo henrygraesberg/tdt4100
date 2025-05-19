@@ -1,0 +1,7 @@
+Ola Nordmann;ola@nordmann.no
+
+3;Fury Beast RGB DDR5 5600 MHz 16GB;Kingston;789.0
+1;B650 Gaming Plus WIFI Hovedkort;MSI;2190.0
+2;Blue Desktop 4TB;WD;1689.0
+
+7935.0
