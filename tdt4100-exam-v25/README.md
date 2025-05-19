@@ -1,5 +1,7 @@
 # TDT4100 Javaeksamen vår 2025 - eksamen 1 (0900)
 
+## English version avaliable at [./README_en.md](./README_en.md). There is an english version of every readme in the subdirectories, named REAMDE_en.md
+
 * Les NØYE gjennom dette dokumentet, README for hver oppgave og JavaDoc i den medfølgende koden.
 
 Eksamen består av 6 deler:
